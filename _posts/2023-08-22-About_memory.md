@@ -39,9 +39,7 @@ A) 메모리 사용 현황 구분
 > 결국 정리하자면, buff/cache 영역은 kernel buffer, page cache, slabs에 사용되는 영역으로 이루어져 있다고 이해했다. 또한 알아본 바에 따르면, 위 3가지 영역들이 사용하는 메모리 현황을 '/proc/meminfo' 상에서 확인할 수 있었다. 해당 내용과 free에서 출력한 buff/cache 영역의 크기를 계산하여 비교해보면 아래와 같다. <br>
 > ![result_command_free,meminfo](https://github.com/yesleekm/yesleekm.github.io/assets/54760524/58df53e8-3f64-4981-babd-e072089bfad3) <br>
 > 파란 박스 내의 Cached는 page cache에 사용되는 영역이라고 이해할 수 있을 것이다. 또한 kernel buffer와 slabs에서 사용하는 영역의 크기도 마찬가지로 표시되어 있다. 이 세 값들의 합을 빨간 박스 내의 buff/cache 크기(free명령 상 출력)와 비교해서 계산해보면 아래와 같이 일치함을 확인할 수 있다. <br>
-> <div style="text-align: center;">
-    ```462972 + 1199664 + 947932 = 2610568 (kb)
-</div>```
+> <center> 462972 + 1199664 + 947932 = 2610568 (kb) </center>
 
 4. shared
 5. available
