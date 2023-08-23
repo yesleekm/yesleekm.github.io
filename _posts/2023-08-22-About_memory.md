@@ -17,13 +17,13 @@ A) 메모리 사용 현황 구분
 
 우선, 'free' 명령의 출력에서는 위 사진에서 나타나듯 6가지 컬럼으로 용도를 구분하는데, 각 내용이 무엇을 의미하는지 알아보았다. <br>
 
-1. used: total - (free + buff/cache)
+1. used (=total-free-buff/cache)
 > used는 쉽게 말하자면 프로세스에서 사용중인 메모리 영역이다. 전체 메모리 영역에서 사용되지 않고 있는 free 영역과 프로세스(혹은 서비스) 용도 외에 다른 특정 목적으로 사용되는 buff/cache 영역을 제외하면 이를 계산할 수 있다. 후술하겠지만, buff/cache 영역은 재사용 가능한 메모리 영역으로 간주되기에 used 영역이 실질적으로 메모리 상에서 점유되고 있는 구역이라고 볼 수 있을 것 같다. <br>
 > ![result_command_free_2](https://github.com/yesleekm/yesleekm.github.io/assets/54760524/cae9f447-47d1-480d-9034-b603a7fa9c9c) <br>
 > 해당 내용에 따르자면 total에서 free와 buff/cache 영역의 크기를 제외하면 used 영역의 크기와 일치해야 하는데, 이것이 맞는지 위 사진의 결과를 토대로 실제로 계산해보면 아래와 같이 일치함을 확인할 수 있다. <br>
->        16402208 - (12992192 + 2555340) = 854676 (kb)
+> ```<center>16402208 - (12992192 + 2555340) = 854676 (kb)</center>```
 
-2. free: total - (used + buff/cache)
+2. free (=total-used-buff/cache)
 > free는 아직 사용되지 않고 남아있는 메모리 영역을 의미한다. man page - free 상에서는 unused 메모리라고 표현하고 있다. 앞서 말한 used 영역이야 말할 필요도 없고, buff/cache 영역 또한 어찌되었든 특정 목적으로 사용하고 있는 구간이다. 따라서 이 두 영역을 제외하고 남은 영역을 free 영역으로 정의한다. 하지만 buff/cache 영역은 말한 바와 같이 재사용 가능한 영역이 포함되어 있으므로, free 영역을 현재 사용 가능한 영역 전체라고 해석하는 것은 잘못되었다고 볼 수 있다. free 영역에 대한 계산 식은 위 1번의 used에 대한 식을 이항한 것에 불과하므로 굳이 다시 검산하지 않아도 될 것 같다. <br>
 
 3. buff/cache
@@ -38,7 +38,7 @@ A) 메모리 사용 현황 구분
 > 결국 정리하자면, buff/cache 영역은 kernel buffer, page cache, slabs에 사용되는 영역으로 이루어져 있다고 이해했다. 또한 알아본 바에 따르면, 위 3가지 영역들이 사용하는 메모리 현황을 '/proc/meminfo' 상에서 확인할 수 있었다. 해당 내용과 free에서 출력한 buff/cache 영역의 크기를 계산하여 비교해보면 아래와 같다. <br>
 > ![result_command_free,meminfo](https://github.com/yesleekm/yesleekm.github.io/assets/54760524/58df53e8-3f64-4981-babd-e072089bfad3) <br>
 > 파란 박스 내의 Cached는 page cache에 사용되는 영역이라고 이해할 수 있을 것이다. 또한 kernel buffer와 slabs에서 사용하는 영역의 크기도 마찬가지로 표시되어 있다. 이 세 값들의 합을 빨간 박스 내의 buff/cache 크기(free명령 상 출력)와 비교해서 계산해보면 아래와 같이 일치함을 확인할 수 있다. <br>
-> 462972 + 1199664 + 947932 = 2610568 (kb)
+> ```<center>462972 + 1199664 + 947932 = 2610568 (kb)</center>```
 
 4. shared
 5. available
