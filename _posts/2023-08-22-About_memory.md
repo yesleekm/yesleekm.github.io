@@ -35,7 +35,7 @@ A) 메모리 사용 현황 구분
 > cache 영역은 page cache와 slabs로 사용된다고 표현되어 있다. CPU에서 사용되는 cache 장치와 개념이 잠시 혼동되었는데, page cache는 디스크의 있는 메모리 중  메모리에 임시로 저장한 데이터를 말한다. 프로세스는 메모리에서 실행되기 때문에 자주 사용되는 데이터가 있다면 저장장치가 아닌 메모리에서 가져오는게 성능적으로 효율적이다. 다만 메모리의 원래 용도가 저장이 아니기 때문에 편의상 임시로 저장하는 용도라고 볼 수 있다. 저장 장치를 읽을 때, 시스템은 page cache를 확인하여 해당 데이터가 존재하는지 확인하고, 그렇다면 굳이 디스크에서 읽지 않고 해당 데이터를 빠르게 가져온다. 그 다음, slabs 영역에 대해서 이해하기 위해서 아래 그림을 먼저 참고하였다. <br> 
 > ![image_slab](https://github.com/yesleekm/yesleekm.github.io/assets/54760524/211b23db-06a1-453f-a5f0-b5c4b4f033b9) <br>
 > 커널이 데이터를 처리할 때, 다양한 data structure가 사용된다. slab 에서는 위 그림에서 나타난 바와 같이, 미리 다양한 size의 cache를 만들어놓고 kernel에서 여러 크기의 data structure 할당을 요청할 때 곧 바로 처리해준다. 정리하자면, 커널의 데이터 처리를 위해 임시로 할당된 메모리 영역이라고 볼 수 있다. <br>
-> 결국 정리하자면, buff/cache 영역은 kernel buffer, page cache, slabs에 사용되는 영역으로 이루어져 있다고 이해했다. GPT-4에 따르면, 위 3가지 영역들이 사용하는 메모리 현황을 '/proc/meminfo' 상에서 확인할 수 있었다. 해당 내용과 free에서 출력한 buff/cache 영역의 크기를 계산하여 비교해보면 아래와 같다. <br>
+> 결국 정리하자면, buff/cache 영역은 kernel buffer, page cache, slabs에 사용되는 영역으로 이루어져 있다고 이해했다. 또한 알아본 바에 따르면, 위 3가지 영역들이 사용하는 메모리 현황을 '/proc/meminfo' 상에서 확인할 수 있었다. 해당 내용과 free에서 출력한 buff/cache 영역의 크기를 계산하여 비교해보면 아래와 같다. <br>
 > ![result_command_free,meminfo](https://github.com/yesleekm/yesleekm.github.io/assets/54760524/58df53e8-3f64-4981-babd-e072089bfad3) <br>
 > 파란 박스 내의 Cached는 page cache에 사용되는 영역이라고 이해할 수 있을 것이다. 또한 kernel buffer와 slabs에서 사용하는 영역의 크기도 마찬가지로 표시되어 있다. 이 세 값들의 합을 빨간 박스 내의 buff/cache 크기(free명령 상 출력)와 비교해서 계산해보면 아래와 같이 일치함을 확인할 수 있다. <br>
 > 462972 + 1199664 + 947932 = 2610568 (kb)
