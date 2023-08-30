@@ -2,7 +2,7 @@
 title: Memory
 author: kmlee
 date: 2023-08-22 18:00:00 +9
-categories: []
+categories: [Concept]
 tags: [concept]
 ---
 
