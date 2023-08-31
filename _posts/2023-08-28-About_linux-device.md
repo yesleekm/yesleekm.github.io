@@ -2,7 +2,7 @@
 title: Linux Device
 author: kmlee
 date: 2023-08-28 18:00:00 +9
-categories: [Concepts]
+categories: [Concept]
 tags: [concept]
 ---
 
@@ -26,7 +26,7 @@ l과 d에 대해서는 각각 symbolic link file과 directory라고 알고 있�
 위 그림은 리눅스에서 장치의 종류에 따라 어떻게 커널과 소통하는지를 나타낸 구조도이다. device driver가 커널과 하드웨어 사이의 중계 역할을 해주는건 장치를 불문하고 공통적인 사항이다. (device driver에 대한 세부적인 내용은 다른 항목에서 다뤄보고자 한다.) 또한 해당 구조에서 char device와 block device의 차이는 시스템 상의 buffer 존재 여부이다. 당연히 내부적으로는 훨씬 더 많은 차이가 있겠지만, 당장 구조를 보고 개념적으로 이해할 수 있는 차이는 이정도인 것 같다. <br>
 결국 원론적으로 이야기하자면, 리눅스 상에서는 장치의 용도에 따라 장치 종류를 구분하고, 장치 종류에 따라 시스템(커널)에서 다루는 방법이 달라진다는 것으로 이해된다. <br>
 
-B. 리눅스 디바이스 드라이버
+B) 리눅스 디바이스 드라이버
 
 
 작성일자
